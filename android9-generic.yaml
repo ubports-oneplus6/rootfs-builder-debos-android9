@@ -15,15 +15,15 @@ actions:
     origin: ut-rootfs.tar.gz
     compression: gz
 
-  - action: overlay
-    source: android9/overlay
-    description: Adding Android 9 base specific overlay
-    destination: /
-
   - action: run
     chroot: true
     description: Adding Android 8/9 packages
     script: scripts/add-android8-repos.sh
+
+  - action: overlay
+    source: android9/overlay
+    description: Adding Android 9 base specific overlay
+    destination: /
 
   - action: run
     chroot: true
