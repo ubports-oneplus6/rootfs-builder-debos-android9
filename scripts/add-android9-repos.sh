@@ -41,6 +41,17 @@ wget https://ci.ubports.com/job/ubports/job/gst-plugins-bad-packaging/job/xenial
 dpkg -i gstreamer1.0-hybris_1.8.3-1ubuntu0.3~overlay2_${ARCH}.deb
 rm gstreamer1.0-hybris_1.8.3-1ubuntu0.3~overlay2_${ARCH}.deb
 
+# custom hfd-service
+mkdir -p /root/hfd
+wget https://build.lolinet.com/file/halium/ubport/packages/hfd-service/hfd-service-tools_0.1.1_${ARCH}.deb -P /root/hfd/
+wget https://build.lolinet.com/file/halium/ubport/packages/hfd-service/hfd-service_0.1.1_${ARCH}.deb -P /root/hfd/
+wget https://build.lolinet.com/file/halium/ubport/packages/hfd-service/libqt5feedback5-hfd_0.1.1_${ARCH}.deb -P /root/hfd/
+wget https://build.lolinet.com/file/halium/ubport/packages/hfd-service/qml-module-hfd_0.1.1_${ARCH}.deb -P /root/hfd/
+
+dpkg -i /root/hfd/*.deb
+rm -rf /root/hfd
+apt-mark hold hfd-service-tools hfd-service libqt5feedback5-hfd qml-module-hfd
+
 # Restore symlink
 rm /etc/resolv.conf
 mv /etc/resolv2.conf /etc/resolv.conf
