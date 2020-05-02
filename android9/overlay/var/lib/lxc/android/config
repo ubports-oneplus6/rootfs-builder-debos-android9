@@ -1,12 +1,12 @@
 lxc.rootfs = /var/lib/lxc/android/rootfs
-lxc.utsname = armhf
+lxc.utsname = arm64
 
 lxc.network.type = none
 
 lxc.devttydir = lxc
 lxc.tty = 4
 lxc.pts = 1024
-lxc.arch = armhf
+lxc.arch = arm64
 lxc.cap.drop = mac_admin mac_override
 lxc.pivotdir = lxc_putold
 
