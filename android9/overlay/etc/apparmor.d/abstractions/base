@@ -108,7 +108,7 @@
   /dev/__properties__/*          r,
   /dev/pmsg0                    rw,
   /dev/hwbinder                 rw,
-  /usr/lib/arm-linux-gnueabihf/qt5/** m,
+  /usr/lib/@{multiarch}/qt5/** m,
 
   # /dev/null is pretty harmless and frequently used
   /dev/null                      rw,
