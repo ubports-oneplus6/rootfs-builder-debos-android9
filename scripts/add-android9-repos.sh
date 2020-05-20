@@ -52,6 +52,27 @@ dpkg -i /root/hfd/*.deb
 rm -rf /root/hfd
 apt-mark hold hfd-service-tools hfd-service libqt5feedback5-hfd qml-module-hfd
 
+# overlay-reader
+apt install -y libzip4
+mkdir -p /root/overlay-reader
+wget https://build.lolinet.com/file/halium/ubport/packages/overlay-reader/getoverlay_0.1.0_${ARCH}.deb -P /root/overlay-reader/
+wget https://build.lolinet.com/file/halium/ubport/packages/overlay-reader/liboverlay-reader_0.1.0_${ARCH}.deb -P /root/overlay-reader/
+wget https://build.lolinet.com/file/halium/ubport/packages/overlay-reader/liboverlay-reader-dev_0.1.0_${ARCH}.deb -P /root/overlay-reader/
+
+dpkg -i /root/overlay-reader/*.deb
+rm -rf /root/overlay-reader
+
+# custom repowerd
+mkdir -p /root/repowerd
+wget https://build.lolinet.com/file/halium/ubport/packages/repowerd/powerd_2020.10+ubports_all.deb -P /root/repowerd/
+wget https://build.lolinet.com/file/halium/ubport/packages/repowerd/repowerd_2020.10+ubports_${ARCH}.deb -P /root/repowerd/
+wget https://build.lolinet.com/file/halium/ubport/packages/repowerd/repowerd-data_2020.10+ubports_all.deb -P /root/repowerd/
+wget https://build.lolinet.com/file/halium/ubport/packages/repowerd/repowerd-tools_2020.10+ubports_${ARCH}.deb -P /root/repowerd/
+
+dpkg -i /root/repowerd/*.deb
+rm -rf /root/repowerd
+apt-mark hold powerd repowerd repowerd-data repowerd-tools
+
 # Restore symlink
 rm /etc/resolv.conf
 mv /etc/resolv2.conf /etc/resolv.conf
