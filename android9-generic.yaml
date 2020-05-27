@@ -1,5 +1,6 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $image := or .image "ubuntu-touch-android9-armhf.tar.gz" -}}
+{{- $output_type := "tarball" -}}
 
 architecture: {{ $architecture }}
 actions:
@@ -39,6 +40,13 @@ actions:
     chroot: true
     description: Setting password on phablet user
     command: echo phablet:phablet | chpasswd
+
+  - action: recipe
+    description: Polish the image
+    recipe: polish.yaml
+    variables:
+      architecture: {{ $architecture }}
+      image: {{ $image }}
 
   - action: pack
     description: Compressing image
