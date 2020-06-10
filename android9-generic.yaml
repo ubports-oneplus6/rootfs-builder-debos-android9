@@ -47,6 +47,7 @@ actions:
     variables:
       architecture: {{ $architecture }}
       image: {{ $image }}
+      output_type: {{ $output_type }}
 
   - action: pack
     description: Compressing image
