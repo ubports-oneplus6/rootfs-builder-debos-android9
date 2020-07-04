@@ -1,5 +1,5 @@
 {{- $architecture := or .architecture "arm64" -}}
-{{- $image := or .image "ubuntu-touch-pinephone.img" -}}
+{{- $image := or .image "ubuntu-touch-pinetab.img" -}}
 {{- $ubports_image := or .ubports_image "ubports_image unset in systemimage-builder" -}}
 {{- $device_image := or .device_image "device_image unset in systemimage-builder" -}}
 {{- $version_image := or .version_image "version_image unset in systemimage-builder" -}}
