@@ -1,9 +1,0 @@
-format system
-load_keyring image-master.tar.xz image-master.tar.xz.asc
-load_keyring image-signing.tar.xz image-signing.tar.xz.asc
-mount system
-update ubports-ee16d621b8a5977be3ca5a8c342f1daaac2aced63b40f2a6c5797ef41b3a7558.tar.xz ubports-ee16d621b8a5977be3ca5a8c342f1daaac2aced63b40f2a6c5797ef41b3a7558.tar.xz.asc
-update device-201ae9009a7102d58a4beddb97ea376d2fb4e6e12248a3ef08896a2ea039598e.tar.xz device-201ae9009a7102d58a4beddb97ea376d2fb4e6e12248a3ef08896a2ea039598e.tar.xz.asc
-update keyring-4c4e7ef380ebcfa2c31084efa199138e93bfed8fc58aa3eb06bdf75a78af9b57.tar.xz keyring-4c4e7ef380ebcfa2c31084efa199138e93bfed8fc58aa3eb06bdf75a78af9b57.tar.xz.asc
-update version-1.tar.xz version-1.tar.xz.asc
-unmount system
