@@ -11,7 +11,7 @@ actions:
     variables:
       architecture: {{ $architecture }}
       image: {{ $image }}
-      device_image: 'device-4ab137f7d44802afe2d170a165fa6e5b411ddbfd15a753d392e8c40f2606b380.tar.xz'
-      ubports_image: 'ubports-75b7460f6f247c74d61fc400cf049f312411b4a05267d488cffb8b43b0e80437.tar.xz'
-      version_path: '16.04/arm64/mainline/devel/pinetab/'
-      version_image: 'version-90.tar.xz'
+      device_image: 'device-8b61033cff85a723be8dea366569c7cb8c0c472f70dd4eb2ae705b83494b36fd.tar.xz'
+      ubports_image: 'ubports-7192882e5dcd196973e9ca1ff038b3b140a863de06d696b0f12c0b5c9cf9ec9c.tar.xz'
+      version_path: '16.04/arm64/mainline/stable/pinetab/'
+      version_image: 'version-1.tar.xz'
