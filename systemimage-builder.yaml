@@ -91,7 +91,7 @@ actions:
   - action: run
     description: Manually set resolver in the container
     chroot: false
-    command: mv /etc/resolv.conf /etc/resolv2.conf && echo "nameserver 1.1.1.1" > /etc/resolv.conf
+    command: mv /etc/resolv.conf /etc/resolv2.conf && echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
   - action: run
     description: create directory to store ubuntu_command file and installable tarballs
