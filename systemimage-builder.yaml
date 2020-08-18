@@ -2,6 +2,7 @@
 {{- $image := or .image "ubuntu-touch-system-image.img" -}}
 {{- $ubports_image := or .ubports_image "ubports_image unset in systemimage-builder" -}}
 {{- $device_image := or .device_image "device_image unset in systemimage-builder" -}}
+{{- $custom_image := or .custom_image "" -}}
 {{- $version_path := or .version_path "version_path unset in systemimage-builder"}}
 {{- $version_image := or .version_image "version_image unset in systemimage-builder" -}}
 {{- $keyring_image := or .keyring_image "keyring-4c4e7ef380ebcfa2c31084efa199138e93bfed8fc58aa3eb06bdf75a78af9b57.tar.xz" -}}
@@ -105,6 +106,14 @@ actions:
     description: Download device tarball
     script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/pool/{{ $device_image }}' 'mnt/cache/recovery/'
 
+{{ if ne $custom_image "" }}
+
+  - action: run
+    description: Download custom tarball
+    script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/pool/{{ $custom_image }}' 'mnt/cache/recovery/'
+
+{{ end }}
+
   - action: run
     description: Download version overlay
     script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/{{$version_path}}/{{ $version_image }}' 'mnt/cache/recovery/'
@@ -139,7 +148,7 @@ actions:
 
   - action: run
     description: Generate ubuntu_command file
-    script: scripts/generate-ubuntu-command.sh '{{ $ubports_image }}' '{{ $device_image }}' '{{ $version_image }}' '{{ $keyring_image }}' > mnt/cache/recovery/ubuntu_command
+    script: scripts/generate-ubuntu-command.sh '{{ $ubports_image }}' '{{ $device_image }}' '{{ $custom_image }}' '{{ $version_image }}' '{{ $keyring_image }}' > mnt/cache/recovery/ubuntu_command
 
   - action: run
     description: Mount needed partitions for preinstall
