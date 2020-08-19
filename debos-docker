@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -x
 LOCATION="$(dirname "$(readlink -f "$0")")"
-IMAGE="godebos/debos"
+IMAGE="local/debos-ubports"
 
 if [ -z $NOINTERACTIVE ]; then
         INTERACTIVE_ARG='--interactive'
