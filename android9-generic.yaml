@@ -1,12 +1,21 @@
 {{- $architecture := or .architecture "armhf" -}}
 {{- $image := or .image (printf "ubuntu-touch-android9-%s.tar.gz" $architecture) -}}
 {{- $output_type := "tarball" -}}
+{{- $channel := or .channel "devel" -}}
 
 architecture: {{ $architecture }}
 actions:
   - action: download
     description: Download latest ubuntu touch rootfs from CI
+{{ if eq $channel "devel" }}
+{{ if eq $architecture "arm64" }}
+    url: "https://ci.ubports.com/job/xenial-hybris-rootfs-{{ $architecture }}/lastSuccessfulBuild/artifact/out/ubuntu-touch-hybris-xenial-{{ $architecture }}-rootfs.tar.gz"
+{{ end }}{{ if eq $architecture "armhf" }}
+    url: "https://ci.ubports.com/job/xenial-rootfs-{{ $architecture }}/lastSuccessfulBuild/artifact/out/ubports-touch.rootfs-xenial-{{ $architecture }}.tar.gz"
+{{ end }}{{ end }}
+{{ if eq $channel "edge" }}
     url: "https://ci.ubports.com/job/xenial-hybris-edge-rootfs-{{ $architecture }}/lastSuccessfulBuild/artifact/out/ubuntu-touch-hybris-xenial-edge-{{ $architecture }}-rootfs.tar.gz"
+{{ end }}
     unpack: false
     filename: ut-rootfs.tar.gz
     name: ut-rootfs.tar.gz
@@ -18,8 +27,8 @@ actions:
 
   - action: run
     chroot: true
-    description: Adding Android 8/9 packages
-    script: scripts/add-android8-repos.sh
+    description: Adding Android 9 packages
+    script: scripts/add-android9-repos.sh {{ $channel }}
 
   - action: overlay
     source: android9/overlay
