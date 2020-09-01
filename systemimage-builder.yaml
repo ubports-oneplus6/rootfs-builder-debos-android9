@@ -198,13 +198,6 @@ actions:
     description: zerofill empty space on the cache partition to reduce final size
     command: zerofree -v `blkid --match-token PARTLABEL=cache --output device`
 
-  # It seems weird, but a second run of fallocate --dig-holes generally clears
-  # a few more megabytes. A third run does not.
-  - action: run
-    description: Reduce final image size by digging holes
-    postprocess: true
-    command: fallocate --dig-holes -v {{ $image }} && fallocate --dig-holes -v {{ $image }}
-
   - action: run
     description: Create bmap file
     postprocess: true
