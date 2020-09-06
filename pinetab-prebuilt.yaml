@@ -1,8 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $image := or .image "ubuntu-touch-pinetab.img" -}}
-{{- $ubports_image := or .ubports_image "ubports_image unset in systemimage-builder" -}}
-{{- $device_image := or .device_image "device_image unset in systemimage-builder" -}}
-{{- $version_image := or .version_image "version_image unset in systemimage-builder" -}}
+{{- $channel := or .channel "16.04/arm64/mainline/stable" -}}
 
 architecture: {{ $architecture }}
 actions:
@@ -11,8 +9,5 @@ actions:
     variables:
       architecture: {{ $architecture }}
       image: {{ $image }}
-      device_image: 'device-46f1c4226d788833362d409cad02946412b7e59fe1a38168e359527c210efac3.tar.xz'
-      ubports_image: 'ubports-74370c2dd77ee942a72a8e560ef6c5a4e5bad264ff627799e4bd28775b102738.tar.xz'
-      custom_image: 'custom-34e90c04ec243169cc395db5c0aeca7dde3ee7a161df19b2c42261042ff93773.tar.xz'
-      version_path: '16.04/arm64/mainline/stable/pinetab/'
-      version_image: 'version-3.tar.xz'
+      device: 'pinetab'
+      channel: {{ $channel }}

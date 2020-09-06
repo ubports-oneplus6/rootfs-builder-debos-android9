@@ -1,8 +1,6 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $image := or .image "ubuntu-touch-pinephone.img" -}}
-{{- $ubports_image := or .ubports_image "ubports_image unset in systemimage-builder" -}}
-{{- $device_image := or .device_image "device_image unset in systemimage-builder" -}}
-{{- $version_image := or .version_image "version_image unset in systemimage-builder" -}}
+{{- $channel := or .channel "16.04/arm64/mainline/stable" -}}
 
 architecture: {{ $architecture }}
 actions:
@@ -11,7 +9,5 @@ actions:
     variables:
       architecture: {{ $architecture }}
       image: {{ $image }}
-      device_image: 'ubports-94a9dc59e715375791f36d7e25d818da770ef7b1ed8a07e78526482c9d34fd9f.tar.xz'
-      ubports_image: 'device-43f5a5a4a81197b6f2e74d9d8997cb28e231186c4096c47694ae03c525bde771.tar.xz'
-      version_path: '16.04/arm64/mainline/stable/pinephone/'
-      version_image: 'version-6.tar.xz'
+      device: 'pinephone'
+      channel: {{ $channel }}

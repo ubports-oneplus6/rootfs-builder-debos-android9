@@ -1,11 +1,7 @@
 {{- $architecture := or .architecture "arm64" -}}
 {{- $image := or .image "ubuntu-touch-system-image.img" -}}
-{{- $ubports_image := or .ubports_image "ubports_image unset in systemimage-builder" -}}
-{{- $device_image := or .device_image "device_image unset in systemimage-builder" -}}
-{{- $custom_image := or .custom_image "" -}}
-{{- $version_path := or .version_path "version_path unset in systemimage-builder"}}
-{{- $version_image := or .version_image "version_image unset in systemimage-builder" -}}
-{{- $keyring_image := or .keyring_image "keyring-4c4e7ef380ebcfa2c31084efa199138e93bfed8fc58aa3eb06bdf75a78af9b57.tar.xz" -}}
+{{- $device := or .device "device unset in systemimage-builder" -}}
+{{- $channel := or .channel "channel unset in systemimage-builder" -}}
 
 # Creates a prebuilt system-image capable image
 
@@ -99,37 +95,8 @@ actions:
     command: mkdir mnt/cache/recovery/
 
   - action: run
-    description: Download system tarball
-    script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/pool/{{ $ubports_image }}' 'mnt/cache/recovery/'
-
-  - action: run
-    description: Download device tarball
-    script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/pool/{{ $device_image }}' 'mnt/cache/recovery/'
-
-{{ if ne $custom_image "" }}
-
-  - action: run
-    description: Download custom tarball
-    script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/pool/{{ $custom_image }}' 'mnt/cache/recovery/'
-
-{{ end }}
-
-  - action: run
-    description: Download version overlay
-    script: scripts/download-file-and-asc.sh 'http://system-image.ubports.com/{{$version_path}}/{{ $version_image }}' 'mnt/cache/recovery/'
-
-  - action: run
-    description: Download keyring
-    script: scripts/download-file-and-asc.sh 'https://system-image.ubports.com/pool/{{ $keyring_image }}' 'mnt/cache/recovery/'
-
-  - action: run
-    description: Download image-signing
-    script: scripts/download-file-and-asc.sh 'https://system-image.ubports.com/gpg/image-signing.tar.xz' 'mnt/cache/recovery/'
-
-  - action: run
-    description: Download image-master
-    chroot: false
-    script: scripts/download-file-and-asc.sh 'https://system-image.ubports.com/gpg/image-master.tar.xz' 'mnt/cache/recovery/'
+    description: Fetches and prepares system image install
+    script: scripts/fetch-and-prepare-latest-ota.sh '{{ $channel }}' '{{ $device }}' 'mnt/cache/recovery/'
 
   - action: run
     description: extract device tarball partitions for writing
@@ -145,10 +112,6 @@ actions:
     source: ../partitions/recovery.img
     offset: 0
     partition: recovery_a
-
-  - action: run
-    description: Generate ubuntu_command file
-    script: scripts/generate-ubuntu-command.sh '{{ $ubports_image }}' '{{ $device_image }}' '{{ $custom_image }}' '{{ $version_image }}' '{{ $keyring_image }}' > mnt/cache/recovery/ubuntu_command
 
   - action: run
     description: Mount needed partitions for preinstall
