@@ -36,6 +36,11 @@ apt install -y hfd-service libqt5feedback5-hfd hfd-service-tools
 # in-call audio
 apt install -y pulseaudio-modules-droid-hidl-28 audiosystem-passthrough
 
+# Media
+wget https://ci.ubports.com/job/ubports/job/gst-plugins-bad-packaging/job/xenial_-_edge_-_android8_-_testing/2/artifact/gstreamer1.0-hybris_1.8.3-1ubuntu0.3~overlay2_${ARCH}.deb
+dpkg -i gstreamer1.0-hybris_1.8.3-1ubuntu0.3~overlay2_${ARCH}.deb
+rm gstreamer1.0-hybris_1.8.3-1ubuntu0.3~overlay2_${ARCH}.deb
+
 # Restore symlink
 rm /etc/resolv.conf
 mv /etc/resolv2.conf /etc/resolv.conf
