@@ -28,7 +28,7 @@ actions:
   - action: run
     chroot: true
     description: Adding Android 9 packages
-    script: scripts/add-android9-repos.sh {{ $channel }}
+    script: scripts/add-android9-repos.sh {{ $channel }} {{ $architecture }}
 
   - action: overlay
     source: android9/overlay

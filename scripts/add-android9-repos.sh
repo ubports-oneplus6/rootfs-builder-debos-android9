@@ -1,6 +1,7 @@
 #!/bin/sh
 
 CHANNEL=${1:-devel}
+ARCH=${2:-armhf}
 
 # Temporary set up the nameserver
 mv /etc/resolv.conf /etc/resolv2.conf
