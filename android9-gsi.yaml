@@ -1,0 +1,31 @@
+{{- $architecture := or .architecture "armhf" -}}
+{{- $image := or .image (printf "ubuntu-touch-android9-%s.tar.gz" $architecture) -}}
+{{- $output_type := "tarball" -}}
+{{- $channel := or .channel "devel" -}}
+
+architecture: {{ $architecture }}
+actions:
+  - action: recipe
+    description: Generate generic Android 9 rootfs
+    recipe: android9-generic.yaml
+    variables:
+      architecture: {{ $architecture }}
+      image: {{ $image }}
+
+  - action: run
+    chroot: true
+    description: Enable SSH and USB network
+    command: sed -i 's/PasswordAuthentication=no/PasswordAuthentication=yes/g' /etc/init/ssh.override && sed -i 's/manual/start on startup/g' /etc/init/ssh.override && sed -i 's/manual/start on startup/g' /etc/init/usb-tethering.conf
+
+  - action: run
+    chroot: true
+    description: Setting password on phablet user
+    command: echo phablet:phablet | chpasswd
+
+  - action: recipe
+    description: Polish the image
+    recipe: polish.yaml
+    variables:
+      architecture: {{ $architecture }}
+      image: {{ $image }}
+      output_type: {{ $output_type }}
