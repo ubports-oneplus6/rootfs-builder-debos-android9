@@ -1,0 +1,41 @@
+{{- $architecture := or .architecture "arm64" -}}
+{{- $image := or .image (printf "ubuntu-touch-enchilada-%s.img" $architecture) -}}
+{{- $channel := or .channel "devel" -}}
+
+architecture: {{ $architecture }}
+actions:
+  - action: recipe
+    description: Generate generic Android 9 rootfs
+    recipe: android9-generic.yaml
+    variables:
+      architecture: {{ $architecture }}
+      image: {{ $image }}
+
+  - action: overlay
+    source: enchilada-downstream/overlay
+    description: Adding OnePlus 6 base specific overlay
+    destination: /
+    
+  - action: image-partition
+    description: Creating image
+    imagename: {{ $image }}
+    imagesize: 2.5GB
+    partitiontype: gpt
+    mountpoints:
+      - mountpoint: /
+        partition: root
+    partitions:
+      - name: root
+        fs: ext4
+        start: 0M
+        end: 100%
+
+  - action: filesystem-deploy
+    description: Deploying filesystem into image
+
+    # This creates 'root-$image' which is the ext4 partition
+    # instead of the whole disk image.
+  - action: run
+    description: Pull out rootfs image
+    postprocess: true
+    command: scripts/extract-rootfs.sh {{ $image }}
