@@ -10,11 +10,21 @@ actions:
     variables:
       architecture: {{ $architecture }}
       image: {{ $image }}
+  - action: run
+    chroot: true
+    description: Enable SSH and USB network
+    command: sed -i 's/PasswordAuthentication=no/PasswordAuthentication=yes/g' /etc/init/ssh.override && sed -i 's/manual/start on startup/g' /etc/init/ssh.override && sed -i 's/manual/start on startup/g' /etc/init/usb-tethering.conf
+
+  - action: run
+    chroot: true
+    description: Setting password on phablet user
+    command: echo phablet:phablet | chpasswd
 
   - action: overlay
     source: enchilada-downstream/overlay
     description: Adding OnePlus 6 base specific overlay
     destination: /
+
     
   - action: image-partition
     description: Creating image
@@ -32,6 +42,13 @@ actions:
 
   - action: filesystem-deploy
     description: Deploying filesystem into image
+  
+  - action: recipe
+    description: Polish the image
+    recipe: polish.yaml
+    variables:
+      architecture: {{ $architecture }}
+      image: {{ $image }}
 
     # This creates 'root-$image' which is the ext4 partition
     # instead of the whole disk image.

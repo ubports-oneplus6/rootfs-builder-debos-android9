@@ -1,6 +1,6 @@
 # These services are disabled due to them being unnecessary critical process
 # and crash loop.
 
-service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service-qti
+service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service-qti_HYBRIS_DISABLED
     disabled
     override
